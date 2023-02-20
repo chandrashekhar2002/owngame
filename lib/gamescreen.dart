@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, non_constant_identifier_names, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
 import 'package:owngame/scorecard.dart';
-
+import 'package:owngame/details.dart';
 class Gamescreen extends StatefulWidget {
   const Gamescreen({Key? key}) : super(key: key);
 
@@ -15,7 +15,7 @@ double y = 859.8095238095239 / 2;
 
 int p1 = 0;
 int p2 = 0;
-double store_x=0,store_y=0;
+double store_x = 0, store_y = 0;
 
 class _GamescreenState extends State<Gamescreen> {
   @override
@@ -42,7 +42,7 @@ class _GamescreenState extends State<Gamescreen> {
                         child: RotatedBox(
                           quarterTurns: 2,
                           child: Text(
-                            "Player 1 ",
+                            "${names[0]} ",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 30,
@@ -72,11 +72,11 @@ class _GamescreenState extends State<Gamescreen> {
                       color: Colors.redAccent,
                       child: Center(
                         child: Text(
-                          "Player 2 ",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 30,
                           ),
+                          "${names[1]}",
                         ),
                       ),
                     ),

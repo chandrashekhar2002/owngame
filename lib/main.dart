@@ -3,18 +3,21 @@
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
-import 'package:owngame/scorecard.dart';
-
+import 'package:owngame/details.dart';
 import 'gamescreen.dart';
 
-void main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  // await Hive.initFlutter();
+  // await Hive.openBox('Data_Box');
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
   ]);
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -125,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Gamescreen(),
+                      builder: (context) => UserDetails(),
                     ),
                   ),
                   child: Text(

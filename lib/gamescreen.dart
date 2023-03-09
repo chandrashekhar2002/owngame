@@ -1,27 +1,54 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, non_constant_identifier_names, unnecessary_string_interpolations
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:owngame/Splashscreen.dart';
 import 'package:owngame/scorecard.dart';
 import 'package:owngame/details.dart';
+
+import 'main.dart';
 class Gamescreen extends StatefulWidget {
-  const Gamescreen({Key? key}) : super(key: key);
+
+  String p1_name,p2_name;
+
+  Gamescreen(this.p1_name, this.p2_name);
 
   @override
   State<Gamescreen> createState() => _GamescreenState();
 }
 
-double x = 859.8095238095239 / 2;
-double y = 859.8095238095239 / 2;
 
 int p1 = 0;
 int p2 = 0;
 double store_x = 0, store_y = 0;
+int maxtimer = 3;
+int sec = maxtimer;
+Timer? timer;
+
 
 class _GamescreenState extends State<Gamescreen> {
+
+  @override
+  void initState() {
+    x=XY/2;
+    y=XY/2;
+    Future.delayed(
+        const Duration(seconds: 0),
+            () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Splashscreenbeforegame()),
+        ));
+    Future.delayed(
+        const Duration(seconds: 3),
+            () => Navigator.of(context).pop());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var safePadding = MediaQuery.of(context).padding.top;
-    double XY = MediaQuery.of(context).size.height - safePadding;
+    final String player_p1 = widget.p1_name.isEmpty ? 'Player 1' : widget.p1_name;
+    final String player_p2 = widget.p2_name.isEmpty ? 'Player 2' : widget.p2_name;
     // print(safePadding);
     print("This Again $XY");
     // print("$check");
@@ -42,7 +69,7 @@ class _GamescreenState extends State<Gamescreen> {
                         child: RotatedBox(
                           quarterTurns: 2,
                           child: Text(
-                            "${names[0]} ",
+                            "$player_p1",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 30,
@@ -76,7 +103,7 @@ class _GamescreenState extends State<Gamescreen> {
                             color: Colors.white,
                             fontSize: 30,
                           ),
-                          "${names[1]}",
+                          "$player_p2",
                         ),
                       ),
                     ),
@@ -102,7 +129,28 @@ class _GamescreenState extends State<Gamescreen> {
       x = 859.8095238095239 / 2;
       y = 859.8095238095239 / 2;
       print("Some On LOST LMAO");
-      return Scorecard();
+      return Scorecard(player_p1,player_p2);
     }
   }
+  void sttimer()
+  {
+    timer = Timer.periodic(Duration(seconds: 5), (_) {
+      setState(() {
+        sec--;
+      });
+    });
+  }
+
+// Widget  callother() {
+//     Future.delayed(Duration(seconds: 3) => return Center(
+//     child: Flexible(
+//     child: Container(
+//       height: 100,width: 80,
+//       child: Text("play"),
+//       color: Colors.grey.withOpacity(0.4),
+//     ),
+//   ),
+//   ); )
+//
+// }
 }

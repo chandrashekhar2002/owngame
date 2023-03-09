@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables
 
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,10 @@ import 'package:owngame/main.dart';
 import 'package:owngame/details.dart';
 
 class Scorecard extends StatefulWidget {
-  const Scorecard({Key? key}) : super(key: key);
+
+  String player1,player2;
+
+  Scorecard(this.player1, this.player2);
 
   @override
   State<Scorecard> createState() => _ScorecardState();
@@ -21,13 +24,13 @@ class _ScorecardState extends State<Scorecard> {
   @override
   Widget build(BuildContext context) {
     if (store_x > store_y) {
-      _winner = names[0];
+      _winner = widget.player1;
       _colored = "BLUE";
     } else {
-      _winner = names[1];
+      _winner = widget.player2;
       _colored = "RED";
     }
-
+    // names.clear();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -79,27 +82,47 @@ class _ScorecardState extends State<Scorecard> {
               ],
             ),
           ),
+
+          DelayedWidget(
+            delayDuration: Duration(seconds: 2),
+            child: GestureDetector(
+              child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.replay, size: 40,
+                      color: Colors.blue,
+                      shadows: [Shadow(color: Colors.grey, blurRadius: 2.2)]),
+                  Text(' Play Again...'),
+                ],
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Gamescreen(widget.player1,widget.player2),));
+              },
+            ),
+          ),
+          SizedBox(height: 20,),
           Row(
             children: [
               GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyHomePage(),
-                    )),
+                onTap: () =>
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyHomePage(),
+                        )),
                 child: SizedBox(
                   height: 150,
                   child:
-                      LottieBuilder.asset("assets/133784-back-to-school.json"),
+                  LottieBuilder.asset("assets/133784-back-to-school.json"),
                 ),
               ),
               DelayedWidget(
                   animationDuration: Duration(milliseconds: 20),
                   child: Icon(Icons.arrow_left)),
               DelayedWidget(
-                  animationDuration: Duration(milliseconds: 20),
+                  animationDuration: Duration(seconds: 2),
                   // delayDuration: Duration(milliseconds: 200),
-                  child: Text(" Press this kid to PLAY AGAIN"))
+                  child: Text(" Press this kid to PLAY AGAIN")),
             ],
           ),
         ],

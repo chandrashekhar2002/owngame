@@ -3,6 +3,9 @@
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:owngame/gamescreen.dart';
+import 'package:owngame/main.dart';
+
+import 'load_widgets/animated_screen.dart';
 
 class UserDetails extends StatefulWidget {
   const UserDetails({Key? key}) : super(key: key);
@@ -57,7 +60,7 @@ class _UserDetailsState extends State<UserDetails> {
                 child: Column(
                   children: [
                     TextField(
-                      maxLength: 5,
+                      maxLength: 10,
                       controller: name1,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -113,7 +116,7 @@ class _UserDetailsState extends State<UserDetails> {
                 child: Column(
                   children: [
                     TextField(
-                      maxLength: 5,
+                      maxLength: 10,
                       controller: name2,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -195,10 +198,13 @@ class _UserDetailsState extends State<UserDetails> {
                       if (p2_name.isNotEmpty) {
                         p2name = p2_name;
                       }
+                      box.put('name_1', p1name);
+                      box.put('name_2', p2name);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Gamescreen(p1name, p2name)),
+                            builder: (context) =>
+                                Splashscreenbeforegame(p1name, p2name)),
                       );
                     }
                   },
@@ -214,10 +220,27 @@ class _UserDetailsState extends State<UserDetails> {
                   onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            Gamescreen('Player 1', 'Player 2'),
-                      )),
+                          builder: (context) =>
+                              Splashscreenbeforegame('Player 1', 'Player 2')
+                          // Gamescreen(),
+                          )),
                   child: Text("PLAY WITH OUT NAMES"),
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              DelayedWidget(
+                delayDuration: Duration(milliseconds: 2000),
+                child: ElevatedButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Splashscreenbeforegame(
+                            box.get('name_1') ?? 'Player 1',
+                            box.get('name_2') ?? 'Player 2'),
+                      )),
+                  child: Text("PLAY WITH PREVIOUS NAMES"),
                 ),
               ),
             ],

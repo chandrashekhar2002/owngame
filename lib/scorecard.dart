@@ -20,6 +20,12 @@ class Scorecard extends StatefulWidget {
 class _ScorecardState extends State<Scorecard> {
   String _winner = "";
   String _colored = "";
+  bool _isloading = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,6 @@ class _ScorecardState extends State<Scorecard> {
       _winner = widget.player2;
       _colored = "RED";
     }
-    // names.clear();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -40,8 +45,9 @@ class _ScorecardState extends State<Scorecard> {
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
-            child: LottieBuilder.asset(
-                "assets/88581-winners-lottie-animation.json"),
+            child: LottieBuilder.asset(box.get('image'),onLoaded: (p0) {
+              _isloading = true;
+            },),
           ),
           Expanded(
             child: Stack(
@@ -118,6 +124,7 @@ class _ScorecardState extends State<Scorecard> {
               ),
               DelayedWidget(
                   animationDuration: Duration(milliseconds: 20),
+
                   child: Icon(Icons.arrow_left)),
               DelayedWidget(
                   animationDuration: Duration(seconds: 2),

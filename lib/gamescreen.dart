@@ -3,21 +3,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:owngame/Splashscreen.dart';
+import 'package:owngame/load_widgets/animated_screen.dart';
 import 'package:owngame/scorecard.dart';
 import 'package:owngame/details.dart';
 
+import 'load_widgets/loaderscreen.dart';
 import 'main.dart';
-class Gamescreen extends StatefulWidget {
 
-  String p1_name,p2_name;
+class Gamescreen extends StatefulWidget {
+  String p1_name, p2_name;
 
   Gamescreen(this.p1_name, this.p2_name);
 
   @override
   State<Gamescreen> createState() => _GamescreenState();
 }
-
 
 int p1 = 0;
 int p2 = 0;
@@ -26,29 +26,20 @@ int maxtimer = 3;
 int sec = maxtimer;
 Timer? timer;
 
-
 class _GamescreenState extends State<Gamescreen> {
-
   @override
   void initState() {
-    x=XY/2;
-    y=XY/2;
-    Future.delayed(
-        const Duration(seconds: 0),
-            () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Splashscreenbeforegame()),
-        ));
-    Future.delayed(
-        const Duration(seconds: 3),
-            () => Navigator.of(context).pop());
+    x = XY / 2;
+    y = XY / 2;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final String player_p1 = widget.p1_name.isEmpty ? 'Player 1' : widget.p1_name;
-    final String player_p2 = widget.p2_name.isEmpty ? 'Player 2' : widget.p2_name;
+    final String player_p1 =
+        widget.p1_name.isEmpty ? 'Player 1' : widget.p1_name;
+    final String player_p2 =
+        widget.p2_name.isEmpty ? 'Player 2' : widget.p2_name;
     // print(safePadding);
     print("This Again $XY");
     // print("$check");
@@ -129,11 +120,11 @@ class _GamescreenState extends State<Gamescreen> {
       x = 859.8095238095239 / 2;
       y = 859.8095238095239 / 2;
       print("Some On LOST LMAO");
-      return Scorecard(player_p1,player_p2);
+      return Resultloader(player_p1, player_p2);
     }
   }
-  void sttimer()
-  {
+
+  void sttimer() {
     timer = Timer.periodic(Duration(seconds: 5), (_) {
       setState(() {
         sec--;

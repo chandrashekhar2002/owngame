@@ -12,9 +12,8 @@ import 'gamescreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Hive.initFlutter();
-  // await Hive.openBox('Data_Box');
-
+  await Hive.initFlutter();
+  await Hive.openBox('Data_Box');
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
@@ -52,14 +51,21 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+final box = Hive.box('Data_Box');
+
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    box.put('image', 'assets/88581-winners-lottie-animation.json');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var safePadding = MediaQuery.of(context).padding.top;
     XY = MediaQuery.of(context).size.height - safePadding;
-    x=XY/2;
-    y=XY/2;
+    x = XY / 2;
+    y = XY / 2;
     return Scaffold(
       backgroundColor: Color.fromRGBO(220, 237, 185, 25),
       body: Center(
@@ -143,14 +149,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 animation: DelayedAnimations.SLIDE_FROM_TOP,
                 child: ElevatedButton(
                   style:
-                  ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-                  onPressed: () =>
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserDetails(),
-                        ),
-                      ),
+                      ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserDetails(),
+                    ),
+                  ),
                   child: Text(
                     " WHO  TAPS  FAST ",
                     style: TextStyle(color: Colors.white),

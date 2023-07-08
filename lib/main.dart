@@ -19,6 +19,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
   ]);
   runApp(MyApp());
+  debugPrint('New Commit 1');
 }
 
 double XY = 0.00;
